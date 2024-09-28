@@ -15,20 +15,21 @@ export default function Login() {
   });
 
   const navigate = useNavigate();
-  //se caso o usuario tiver autenticado e ela for pra page de login ele é redirecionado para o home
+
   useEffect(() => {
-    const auth = getAuth();
+    const auth = getAuth(firebase);
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        console.log(user);
-        navigate("/home");
-      }
-      else{
-        navigate("/");
+        if (window.location.pathname !== "/home") {
+          navigate("/");
+        }
+      } else {
+        if (window.location.pathname !== "/") {
+          navigate("/register");
+        }
       }
     });
   }, []);
-  
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -37,7 +38,6 @@ export default function Login() {
       signInWithEmailAndPassword(auth, values.email, values.password)
         .then((userCredential) => {
           const user = userCredential.user;
-          alert("entrou na conta");
           navigate("/home");
         })
         .catch((e) => {

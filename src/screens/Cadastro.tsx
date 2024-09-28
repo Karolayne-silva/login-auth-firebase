@@ -48,17 +48,22 @@ export default function Cadastro() {
     if (validate()) {
       try {
         const auth = getAuth(firebase);
-        createUserWithEmailAndPassword(auth, dataToSend.email, dataToSend.password)
+        createUserWithEmailAndPassword(
+          auth,
+          dataToSend.email,
+          dataToSend.password
+        )
           .then((userCredential) => {
             const user = userCredential.user;
-            alert("Create Account");
+            alert(`Usuário ${user.email} criado com sucesso`)
             navigate("/");
           })
           .catch((error) => {
-            alert(error)
+            console.log("Erro na criação de usuário:", error.message);
+            alert(error);
           });
-
       } catch (error) {
+        console.log("Erro no try-catch:", error);
         alert(error);
       }
     }
