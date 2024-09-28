@@ -1,24 +1,8 @@
 import { useEffect} from "react";
-import { useNavigate  } from "react-router-dom";
 import firebase from "../firebaseConfig";
 import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
 
 export default function Home() {
-
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const auth = getAuth();
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        console.log(user);
-        navigate("/home");
-      } else {
-        navigate("/");
-      }
-    });
-  }, []);
-
 
   const handleLogout = () => {
     const auth = getAuth(firebase);
